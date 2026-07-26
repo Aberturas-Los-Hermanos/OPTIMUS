@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPTIMUS — Relojes, Lentes y Perfumes de Lujo</title>
+<meta name="description" content="Catálogo exclusivo de relojes, lentes y perfumes de alta gama. Atención personalizada por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600;700&family=Jost:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root{
+    --carbon:#120F0C;
+    --graphite:#1C1815;
+    --panel:#211C17;
+    --brass:#BFA05A;
+    --champagne:#E4C989;
+    --brass-deep:#7A5F32;
+    --ivory:#F2ECE1;
+    --smoke:#8C8478;
+    --sage:#7C9473;
+    --rust:#A9645A;
+    --border-brass:rgba(191,160,90,0.18);
+    --header-h:84px;
+  }
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--carbon);
+    color:var(--ivory);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--carbon);}
+  ::-webkit-scrollbar-thumb{background:var(--brass-deep);border-radius:10px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--brass);}
+
+  h1,h2,h3,.logo,.card-title,.modal-info h2{font-family:'Bodoni Moda',serif;}
+  img{display:block;max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+
+  /* ===== HEADER ===== */
+  .site-header{
+    position:fixed;top:0;left:0;right:0;height:var(--header-h);
+    display:flex;align-items:center;
+    background:rgba(18,15,12,0.82);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-brass);
+    z-index:1000;padding:0 2rem;
+    transition:background .3s ease, box-shadow .3s ease;
+  }
+  .site-header.scrolled{background:rgba(18,15,12,0.97);box-shadow:0 8px 30px rgba(0,0,0,0.35);}
+  .header-inner{max-width:1400px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
+  .logo{font-size:1.7rem;font-weight:600;letter-spacing:.18em;color:var(--champagne);white-space:nowrap;}
+  .search-wrapper{position:relative;max-width:300px;width:100%;}
+  .search-wrapper svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--brass);width:16px;height:16px;pointer-events:none;}
+  .search-wrapper input{
+    width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-brass);
+    border-radius:30px;padding:.65rem 1rem .65rem 2.6rem;color:var(--ivory);
+    font-family:'Jost',sans-serif;font-size:.85rem;outline:none;
+    transition:border-color .3s ease, background .3s ease, box-shadow .3s ease;
+  }
+  .search-wrapper input::placeholder{color:var(--smoke);}
+  .search-wrapper input:focus{border-color:var(--brass);background:rgba(255,255,255,0.06);box-shadow:0 0 0 3px rgba(191,160,90,0.12);}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;max-width:820px;margin:0 auto;text-align:center;
+    padding:calc(var(--header-h) + 5.5rem) 2rem 3.5rem;overflow:hidden;}
+  .hero-motif{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:640px;height:640px;max-width:none;opacity:.09;pointer-events:none;
+  }
+  .hero-motif circle,.hero-motif line{stroke:var(--brass);fill:none;stroke-width:1;}
+  .hero-content{position:relative;z-index:1;}
+  .eyebrow{display:block;color:var(--brass);text-transform:uppercase;letter-spacing:.32em;font-size:.72rem;margin-bottom:1.1rem;}
+  .hero h1{font-size:clamp(1.9rem,4.2vw,2.9rem);font-weight:600;margin-bottom:1.1rem;color:var(--ivory);line-height:1.25;}
+  .hero p{color:var(--smoke);font-size:1rem;max-width:480px;margin:0 auto;font-weight:300;}
+
+  /* ===== CATEGORY PILLS ===== */
+  .filters-nav{
+    position:sticky;top:var(--header-h);z-index:900;
+    background:rgba(18,15,12,0.95);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-brass);
+    padding:1.1rem 2rem;
+  }
+  .filters-inner{max-width:1400px;margin:0 auto;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
+  .filter-btn{
+    background:transparent;border:1px solid var(--border-brass);color:var(--smoke);
+    padding:.55rem 1.5rem;border-radius:30px;text-transform:uppercase;letter-spacing:.08em;
+    font-size:.72rem;font-weight:600;cursor:pointer;
+    transition:all .3s ease;
+  }
+  .filter-btn:hover{border-color:var(--brass);color:var(--champagne);}
+  .filter-btn.active,.filter-btn.active:hover{background:var(--brass);border-color:var(--brass);color:var(--carbon);}
+
+  /* ===== CATALOG LAYOUT (sidebar + grid) ===== */
+  .catalog-container{max-width:1400px;margin:0 auto;padding:3.2rem 2rem 6rem;}
+  .catalog-layout{display:flex;gap:2.6rem;align-items:flex-start;}
+  .catalog-main{flex:1;min-width:0;}
+
+  /* ---- Sidebar ---- */
+  .filters-sidebar{
+    width:262px;flex-shrink:0;
+    position:sticky;top:calc(var(--header-h) + 90px);
+    max-height:calc(100vh - var(--header-h) - 110px);
+    overflow-y:auto;padding-right:.5rem;
+  }
+  .sidebar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-brass);}
+  .sidebar-header h2{font-size:1.15rem;font-weight:600;color:var(--champagne);}
+  .sidebar-close{display:none;background:transparent;border:none;color:var(--ivory);font-size:1.6rem;line-height:1;cursor:pointer;padding:.2rem;}
+  .clear-filters-btn{
+    width:100%;background:transparent;border:1px solid var(--border-brass);color:var(--smoke);
+    padding:.6rem;border-radius:2px;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;
+    cursor:pointer;margin-bottom:1.5rem;transition:all .3s ease;
+  }
+  .clear-filters-btn:hover{border-color:var(--brass);color:var(--champagne);}
+  .filter-group{margin-bottom:1.6rem;padding-bottom:1.6rem;border-bottom:1px solid var(--border-brass);}
+  .filter-group:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .filter-group-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--brass);margin-bottom:.75rem;font-weight:600;}
+  .filter-option{display:flex;align-items:center;gap:.65rem;padding:.38rem 0;cursor:pointer;font-size:.84rem;}
+  .filter-option input[type="checkbox"]{
+    appearance:none;-webkit-appearance:none;width:16px;height:16px;flex-shrink:0;
+    border:1px solid var(--border-brass);border-radius:3px;background:transparent;
+    position:relative;cursor:pointer;transition:all .2s ease;
+  }
+  .filter-option input[type="checkbox"]:hover{border-color:var(--brass);}
+  .filter-option input[type="checkbox"]:checked{background:var(--brass);border-color:var(--brass);}
+  .filter-option input[type="checkbox"]:checked::after{
+    content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;
+    border:solid var(--carbon);border-width:0 2px 2px 0;transform:rotate(45deg);
+  }
+  .filter-option-label{flex:1;color:var(--ivory);}
+  .filter-option:hover .filter-option-label{color:var(--champagne);}
+  .filter-option-count{color:var(--smoke);font-family:'Space Mono',monospace;font-size:.7rem;}
+  .filters-empty{font-size:.82rem;color:var(--smoke);line-height:1.65;}
+  .sidebar-backdrop{display:none;}
+
+  /* ---- Toolbar + chips (main column) ---- */
+  .catalog-toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem;}
+  .btn-toggle-filters{
+    display:none;align-items:center;gap:.55rem;background:transparent;border:1px solid var(--brass);
+    color:var(--champagne);padding:.55rem 1.15rem;border-radius:30px;font-size:.74rem;
+    letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  }
+  .filter-count-badge{
+    display:none;align-items:center;justify-content:center;background:var(--brass);color:var(--carbon);
+    border-radius:50%;min-width:18px;height:18px;font-size:.65rem;padding:0 4px;
+    font-family:'Space Mono',monospace;
+  }
+  .filter-count-badge.show{display:inline-flex;}
+  .results-count{color:var(--smoke);font-size:.8rem;font-family:'Space Mono',monospace;}
+
+  .active-chips{display:none;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1.6rem;}
+  .active-chips.show{display:flex;}
+  .filter-chip{
+    display:inline-flex;align-items:center;gap:.5rem;background:rgba(191,160,90,0.12);
+    border:1px solid var(--border-brass);color:var(--champagne);padding:.4rem .85rem;
+    border-radius:20px;font-size:.74rem;cursor:pointer;transition:all .25s ease;
+  }
+  .filter-chip:hover{border-color:var(--brass);background:rgba(191,160,90,0.2);}
+  .filter-chip span{opacity:.7;}
+  .clear-all-chip{background:transparent;border:none;color:var(--smoke);text-decoration:underline;font-size:.74rem;cursor:pointer;padding:.4rem 0;}
+  .clear-all-chip:hover{color:var(--champagne);}
+
+  /* ===== PRODUCT GRID ===== */
+  .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2rem;}
+
+  .product-card{
+    background:var(--graphite);border:1px solid var(--border-brass);border-radius:6px;
+    overflow:hidden;cursor:pointer;
+    opacity:0;transform:translateY(26px);
+    transition:opacity .6s ease, transform .6s ease, box-shadow .4s ease, border-color .4s ease;
+  }
+  .product-card.visible{opacity:1;transform:translateY(0);}
+  .product-card.visible:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 44px rgba(0,0,0,0.45);
+    border-color:rgba(191,160,90,0.45);
+  }
+
+  .card-image-wrap{position:relative;aspect-ratio:4/5;overflow:hidden;background:#0a0908;}
+  .card-image-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
+  .product-card.visible:hover .card-image-wrap img{transform:scale(1.05);}
+  .card-badge{
+    position:absolute;top:.9rem;left:.9rem;background:rgba(18,15,12,0.82);color:var(--champagne);
+    font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .7rem;
+    border:1px solid var(--border-brass);border-radius:20px;z-index:2;
+  }
+  .card-body{padding:1.3rem 1.2rem 1.4rem;}
+  .card-meta{display:block;font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.06em;color:var(--brass);opacity:.9;margin-bottom:.5rem;text-transform:uppercase;}
+  .card-title{font-size:1.02rem;font-weight:500;margin-bottom:.6rem;color:var(--ivory);line-height:1.3;}
+  .card-price-row{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:1.1rem;flex-wrap:wrap;}
+  .card-price{font-family:'Space Mono',monospace;color:var(--champagne);font-size:.98rem;font-weight:700;}
+  .stock-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.66rem;color:var(--smoke);}
+  .stock-dot{width:7px;height:7px;border-radius:50%;background:var(--smoke);flex-shrink:0;}
+  .stock-dot.available{background:var(--sage);}
+  .stock-dot.low{background:var(--brass);}
+  .stock-dot.out{background:var(--rust);}
+  .btn-view{
+    width:100%;background:transparent;border:1px solid var(--brass);color:var(--champagne);
+    padding:.68rem;border-radius:2px;text-transform:uppercase;letter-spacing:.09em;
+    font-size:.7rem;font-weight:600;cursor:pointer;
+    transition:all .3s ease;
+  }
+  .btn-view:hover{background:var(--brass);color:var(--carbon);}
+
+  .no-results{display:none;text-align:center;color:var(--smoke);padding:4rem 1rem;font-size:.95rem;}
+  .no-results.show{display:block;}
+  .no-results .btn-view{max-width:220px;margin:1.2rem auto 0;}
+
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(6,5,4,0.88);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;z-index:2000;padding:2rem;
+    opacity:0;visibility:hidden;transition:opacity .35s ease, visibility .35s ease;
+  }
+  .modal-overlay.active{opacity:1;visibility:visible;}
+  .modal-box{
+    background:var(--panel);border:1px solid var(--border-brass);border-radius:8px;
+    max-width:920px;width:100%;max-height:86vh;overflow-y:auto;position:relative;
+    transform:scale(.94) translateY(16px);transition:transform .35s ease;
+  }
+  .modal-overlay.active .modal-box{transform:scale(1) translateY(0);}
+  .modal-grid{display:grid;grid-template-columns:1fr 1fr;}
+  .modal-image-wrap{background:#0a0908;min-height:320px;}
+  .modal-image-wrap img{width:100%;height:100%;object-fit:cover;}
+  .modal-info{padding:2.6rem;display:flex;flex-direction:column;}
+  .modal-tags{display:flex;align-items:center;gap:.9rem;margin-bottom:.9rem;flex-wrap:wrap;}
+  .modal-badge{color:var(--brass);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;}
+  .modal-ref{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--smoke);letter-spacing:.05em;}
+  .modal-brand{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;color:var(--smoke);margin-bottom:.4rem;}
+  .modal-info h2{font-size:1.55rem;font-weight:600;margin-bottom:.7rem;line-height:1.3;}
+  .modal-price-row{display:flex;align-items:center;gap:1.1rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .modal-price{font-family:'Space Mono',monospace;color:var(--champagne);font-size:1.25rem;font-weight:700;}
+  .modal-stock{display:inline-flex;align-items:center;gap:.45rem;font-size:.76rem;color:var(--smoke);}
+  .modal-desc{white-space:pre-line;color:var(--smoke);line-height:1.75;font-size:.92rem;margin-bottom:1.8rem;}
+  .btn-whatsapp{
+    display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+    background:linear-gradient(135deg,var(--champagne),var(--brass));color:var(--carbon);
+    padding:.95rem 1.6rem;border-radius:2px;text-decoration:none;font-weight:700;
+    text-transform:uppercase;letter-spacing:.06em;font-size:.78rem;margin-top:auto;
+    transition:all .3s ease;
+  }
+  .btn-whatsapp:hover{box-shadow:0 10px 26px rgba(191,160,90,0.35);transform:translateY(-2px);}
+  .modal-close{
+    position:absolute;top:1rem;right:1rem;z-index:10;background:rgba(18,15,12,0.75);
+    border:1px solid var(--border-brass);color:var(--ivory);width:38px;height:38px;
+    border-radius:50%;font-size:1.4rem;line-height:1;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;transition:all .3s ease;
+  }
+  .modal-close:hover{background:var(--brass);color:var(--carbon);}
+
+  /* ===== FOOTER ===== */
+  .site-footer{border-top:1px solid var(--border-brass);padding:3rem 2rem;text-align:center;}
+  .footer-brand{font-family:'Bodoni Moda',serif;font-size:1.3rem;letter-spacing:.16em;color:var(--champagne);margin-bottom:.6rem;}
+  .site-footer p{color:var(--smoke);font-size:.85rem;margin-bottom:.9rem;}
+  .footer-whatsapp-link{color:var(--brass);text-decoration:none;font-size:.85rem;letter-spacing:.04em;border-bottom:1px solid var(--brass);padding-bottom:2px;transition:color .3s ease,border-color .3s ease;}
+  .footer-whatsapp-link:hover{color:var(--champagne);border-color:var(--champagne);}
+  .footer-copy{margin-top:1.6rem;font-size:.72rem;color:#57524a;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:960px){
+    .catalog-layout{display:block;}
+    .filters-sidebar{
+      position:fixed;top:0;left:0;bottom:0;width:min(320px,85vw);
+      background:var(--graphite);z-index:1500;padding:1.6rem;
+      max-height:none;transform:translateX(-100%);transition:transform .35s ease;
+      box-shadow:20px 0 60px rgba(0,0,0,.5);border-right:1px solid var(--border-brass);
+    }
+    .filters-sidebar.open{transform:translateX(0);}
+    .sidebar-close{display:block;}
+    .btn-toggle-filters{display:inline-flex;}
+    .sidebar-backdrop{
+      display:block;position:fixed;inset:0;background:rgba(6,5,4,.75);
+      z-index:1400;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;
+    }
+    .sidebar-backdrop.open{opacity:1;visibility:visible;}
+  }
+  @media (max-width:860px){
+    .modal-grid{grid-template-columns:1fr;}
+    .modal-image-wrap{aspect-ratio:4/3;min-height:0;}
+    .modal-info{padding:1.8rem;}
+  }
+  @media (max-width:640px){
+    :root{--header-h:70px;}
+    .site-header{padding:0 1.2rem;}
+    .logo{font-size:1.2rem;letter-spacing:.12em;}
+    .search-wrapper{max-width:150px;}
+    .hero{padding:calc(var(--header-h) + 3.2rem) 1.2rem 2.2rem;}
+    .filters-nav{padding:.9rem 1rem;}
+    .catalog-container{padding:2.2rem 1.2rem 4rem;}
+    .catalog-grid{grid-template-columns:1fr;gap:1.5rem;}
+    .modal-info h2{font-size:1.3rem;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+    html{scroll-behavior:auto;}
+    .product-card{opacity:1 !important;transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="logo">OPTIMUS</div>
+    <div class="search-wrapper">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar producto...">
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="hero-motif" viewBox="0 0 600 600" aria-hidden="true">
+    <circle cx="300" cy="300" r="280"/>
+    <circle cx="300" cy="300" r="200"/>
+    <line x1="300" y1="20" x2="300" y2="75"/>
+    <line x1="440" y1="57.5" x2="426" y2="81.8"/>
+    <line x1="542.5" y1="160" x2="518.2" y2="174"/>
+    <line x1="580" y1="300" x2="525" y2="300"/>
+    <line x1="542.5" y1="440" x2="518.2" y2="426"/>
+    <line x1="440" y1="542.5" x2="426" y2="518.2"/>
+    <line x1="300" y1="580" x2="300" y2="525"/>
+    <line x1="160" y1="542.5" x2="174" y2="518.2"/>
+    <line x1="57.5" y1="440" x2="81.8" y2="426"/>
+    <line x1="20" y1="300" x2="75" y2="300"/>
+    <line x1="57.5" y1="160" x2="81.8" y2="174"/>
+    <line x1="160" y1="57.5" x2="174" y2="81.8"/>
+  </svg>
+  <div class="hero-content">
+    <span class="eyebrow">Colección Exclusiva</span>
+    <h1>El estilo propio es tu carta de presentación sin necesidad de palabras.</h1>
+    <p>Una selección curada de relojes, lentes y fragancias para quienes no dejan nada al azar.</p>
+  </div>
+</section>
+
+<nav class="filters-nav">
+  <div class="filters-inner">
+    <button type="button" class="filter-btn active" data-filter="todos">Todos</button>
+    <button type="button" class="filter-btn" data-filter="relojes">Relojes</button>
+    <button type="button" class="filter-btn" data-filter="lentes">Lentes</button>
+    <button type="button" class="filter-btn" data-filter="perfumes">Perfumes</button>
+  </div>
+</nav>
+
+<main class="catalog-section">
+  <div class="catalog-container">
+    <div class="catalog-layout">
+
+      <aside class="filters-sidebar" id="filtersSidebar">
+        <div class="sidebar-header">
+          <h2>Filtros</h2>
+          <button type="button" id="sidebarClose" class="sidebar-close" aria-label="Cerrar filtros">&times;</button>
+        </div>
+        <button type="button" id="clearFiltersBtn" class="clear-filters-btn">Limpiar todos los filtros</button>
+        <div class="filter-groups" id="filterGroups"></div>
+      </aside>
+
+      <div class="catalog-main">
+        <div class="catalog-toolbar">
+          <button type="button" id="toggleFiltersBtn" class="btn-toggle-filters">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/><circle cx="6" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
+            Filtros
+            <span class="filter-count-badge" id="activeFilterCount"></span>
+          </button>
+          <span class="results-count" id="resultsCount"></span>
+        </div>
+
+        <div class="active-chips" id="activeChips"></div>
+
+        <div class="catalog-grid" id="catalogGrid"></div>
+        <div class="no-results" id="noResults">
+          <p>No encontramos productos con estas características. Intenta borrar algunos filtros.</p>
+          <button type="button" id="noResultsClearBtn" class="btn-view">Limpiar filtros</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<footer class="site-footer">
+  <div class="footer-brand">OPTIMUS</div>
+  <p>Relojes, lentes y perfumes seleccionados con criterio.</p>
+  <a href="#" id="footerWhatsapp" class="footer-whatsapp-link">Contactanos por WhatsApp</a>
+  <p class="footer-copy">© 2026 OPTIMUS. Todos los derechos reservados.</p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal-grid">
+      <div class="modal-image-wrap"><img id="modalImg" src="" alt=""></div>
+      <div class="modal-info">
+        <div class="modal-tags">
+          <span class="modal-badge" id="modalCategory"></span>
+          <span class="modal-ref" id="modalRef"></span>
+        </div>
+        <span class="modal-brand" id="modalBrand"></span>
+        <h2 id="modalTitle"></h2>
+        <div class="modal-price-row">
+          <p class="modal-price" id="modalPrice"></p>
+          <span class="modal-stock" id="modalStock"></span>
+        </div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <a href="#" id="modalWhatsappBtn" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2.003c-5.52 0-9.99 4.47-9.99 9.99 0 1.76.46 3.48 1.34 4.99L2 22l5.13-1.35a9.96 9.96 0 0 0 4.91 1.29h.01c5.52 0 9.99-4.47 9.99-9.99 0-2.67-1.04-5.18-2.93-7.07a9.93 9.93 0 0 0-7.07-2.93Zm0 1.8a8.16 8.16 0 0 1 5.8 2.4 8.14 8.14 0 0 1 2.4 5.79c0 4.52-3.68 8.19-8.2 8.19a8.18 8.18 0 0 1-4.17-1.14l-.3-.18-3.05.8.81-2.97-.19-.3a8.15 8.15 0 0 1-1.25-4.4c0-4.52 3.68-8.19 8.15-8.19Zm-4.5 4.36c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.35-.76-1.84-.2-.48-.4-.41-.55-.42h-.4Z"/></svg>
+          Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ⚠️ Reemplazá este número por el de tu WhatsApp Business
+  // Formato: 549 + código de área (sin 0) + número (sin 15). Ej: Buenos Aires -> 5491112345678
+  const WHATSAPP_NUMBER = "5491124979941";
+
+  const products = [
+    { id:1, ref:"REL-001", category:"relojes", title:"Reloj Cronógrafo Imperial", price:245000,
+      brand:"Roku", gender:"Hombre", stock:"Disponible",
+      movement:"Automático", strap_material:"Cuero",
+      image:"https://placehold.co/480x600/1a1a1a/c9a961?text=Cronografo+Imperial",
+      description:"Un cronógrafo de precisión que combina funcionalidad e imponencia.\n\nMaterial: Acero inoxidable con baño de oro 18k\nCorrea: Cuero genuino color cognac\nMovimiento: Cuarzo de alta precisión\nResistencia al agua: 50 metros\n\nIncluye caja de regalo y garantía internacional de 2 años." },
+
+    { id:5, ref:"LEN-001", category:"lentes", title:"Lentes Aviador Gold Edition", price:89500,
+      brand:"Ray-Ban", gender:"Unisex", stock:"Disponible",
+      frame_shape:"Aviador", lens_type:"Sol",
+      image:"https://placehold.co/480x600/1a1a1a/c9a961?text=Aviador+Gold",
+      description:"El clásico aviador reinventado, con marco bañado en oro.\n\nMaterial: Metal dorado antialérgico\nLentes: Polarizados con protección UV400\nEstuche: Rígido de cuero incluido\n\nUn ícono del estilo atemporal." },
+
+    { id:9, ref:"PER-001", category:"perfumes", title:"Perfume Body Splash Khamra", price:12000,
+      brand:"Lataffa", gender:"Unisex", stock:"Disponible",
+      ml:250, fragrance_type:"Body Splash", olfactory_family:"Gourmand",
+      image:"Perfumes/Catalogo1/1.jpg",
+      description:"Place Holder" },
+    { id:10, ref:"PER-002", category:"perfumes", title:"Grandeur Tubbees Sweet Caramel", price:1234,
+      brand:"Grandeur", gender:"Unisex", stock:"Disponible",
+      ml:50, fragrance_type:"EDP", olfactory_family:"Gourmand",
+      image:"Perfumes/Catalogo1/2.jpg",
+      description:"Es un perfume muy cálido que huele literalmente a caramelo derretido y crema de vainilla. Por su dulzor intenso e indulgente, es ideal para usar en climas fríos (otoño/invierno) o en momentos relajados en los que buscas una fragancia muy acogedora, informal y divertida." },
+    { id:11, ref:"PER-003", category:"perfumes", title:"Grandeur Tubbees Dreamy Treats", price:1234,
+      brand:"Grandeur", gender:"Unisex", stock:"Disponible",
+      ml:50, fragrance_type:"EDP", olfactory_family:"Oriental Vainilla",
+      image:"Perfumes/Catalogo1/3.jpg",
+      description:"Está pensado para dar una sensación dulce y acogedora, pero el Dreamy Treats tiende a ser un poco más empolvado, lactónico y tierno (como una bolsa de malvaviscos en lugar del caramelo caliente). Es muy recomendado para climas frescos o templados y salidas casuales." },
+    { id:12, ref:"PER-004", category:"perfumes", title:"Fakhar Black", price:1234,
+      brand:"Lataffa", gender:"Masculino", stock:"Disponible",
+      ml:100, fragrance_type:"EDP", olfactory_family:"Fougere Aromático",
+      image:"Perfumes/Catalogo1/4.jpg",
+      description:"Extremadamente versátil. Es un perfume excelente para usar de firma (todos los días), perfecto para la oficina, la universidad, salidas informales o clima primaveral y cálido. Huele a hombre pulcro, limpio y sofisticado, sin ser invasivo." }
+  ];
+
+  const categoryLabels = { relojes:"Relojes", lentes:"Lentes", perfumes:"Perfumes" };
+
+  // Orden preferido para stock (en vez de alfabético)
+  const STOCK_ORDER = ["Disponible","Últimas unidades","Sin stock"];
+
+  // Configuración de filtros: "general" aparece siempre; el resto solo aparece
+  // cuando esa categoría específica está activa en las pestañas de arriba.
+  const FILTER_CONFIG = [
+    { field:"brand", label:"Marca", scope:"general" },
+    { field:"gender", label:"Género", scope:"general" },
+    { field:"stock", label:"Stock", scope:"general", order:STOCK_ORDER },
+    { field:"ml", label:"Tamaño", scope:"perfumes", numeric:true, suffix:" ml" },
+    { field:"fragrance_type", label:"Tipo de Fragancia", scope:"perfumes" },
+    { field:"olfactory_family", label:"Familia Olfativa", scope:"perfumes" },
+    { field:"movement", label:"Movimiento", scope:"relojes" },
+    { field:"strap_material", label:"Material de Correa", scope:"relojes" },
+    { field:"frame_shape", label:"Forma de Armazón", scope:"lentes" },
+    { field:"lens_type", label:"Tipo de Lente", scope:"lentes" }
+  ];
+
+  // ===== Referencias DOM =====
+  const catalogGrid = document.getElementById("catalogGrid");
+  const noResults = document.getElementById("noResults");
+  const searchInput = document.getElementById("searchInput");
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const siteHeader = document.getElementById("siteHeader");
+  const resultsCountEl = document.getElementById("resultsCount");
+
+  const filtersSidebar = document.getElementById("filtersSidebar");
+  const filterGroupsEl = document.getElementById("filterGroups");
+  const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+  const toggleFiltersBtn = document.getElementById("toggleFiltersBtn");
+  const sidebarClose = document.getElementById("sidebarClose");
+  const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+  const activeChipsEl = document.getElementById("activeChips");
+  const activeFilterCountEl = document.getElementById("activeFilterCount");
+  const noResultsClearBtn = document.getElementById("noResultsClearBtn");
+
+  // ===== Estado =====
+  let activeFilter = "todos";
+  let searchTerm = "";
+  let activeFilters = {};   // { brand: Set(["Rolex"]), stock: Set(["Disponible"]), ... }
+  let cardObserver;
+
+  // ===== Helpers =====
+  function normalize(str){
+    return str.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  }
+
+  function formatPrice(n){
+    return "$" + n.toLocaleString("es-AR");
+  }
+
+  function buildWhatsAppLink(text){
+    return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+  }
+
+  function stockClass(stock){
+    if(stock === "Disponible") return "available";
+    if(stock === "Últimas unidades") return "low";
+    if(stock === "Sin stock") return "out";
+    return "";
+  }
+
+  function sortValues(values, cfg){
+    if(cfg.order){
+      return values.slice().sort(function(a,b){ return cfg.order.indexOf(a) - cfg.order.indexOf(b); });
+    }
+    if(cfg.numeric){
+      return values.slice().sort(function(a,b){ return Number(a) - Number(b); });
+    }
+    return values.slice().sort(function(a,b){ return String(a).localeCompare(String(b),"es"); });
+  }
+
+  // ===== Filtrado combinado =====
+  function productMatchesAdvancedFilters(p){
+    for(let i=0;i<FILTER_CONFIG.length;i++){
+      const cfg = FILTER_CONFIG[i];
+      const selected = activeFilters[cfg.field];
+      if(selected && selected.size > 0){
+        if(!selected.has(String(p[cfg.field]))) return false;
+      }
+    }
+    return true;
+  }
+
+  function getFilteredProducts(){
+    return products.filter(function(p){
+      const matchesCategory = activeFilter === "todos" || p.category === activeFilter;
+      const matchesSearch = normalize(p.title).includes(normalize(searchTerm));
+      return matchesCategory && matchesSearch && productMatchesAdvancedFilters(p);
+    });
+  }
+
+  // ===== Sidebar dinámica =====
+  function renderSidebar(){
+    const scopedProducts = activeFilter === "todos" ? products : products.filter(function(p){ return p.category === activeFilter; });
+
+    let html = "";
+    FILTER_CONFIG.forEach(function(cfg){
+      if(cfg.scope !== "general" && cfg.scope !== activeFilter) return;
+
+      const rawValues = scopedProducts.map(function(p){ return p[cfg.field]; })
+        .filter(function(v){ return v !== null && v !== undefined && v !== ""; })
+        .map(String);
+      const uniqueValues = Array.from(new Set(rawValues));
+      if(uniqueValues.length === 0) return;
+
+      const sorted = sortValues(uniqueValues, cfg);
+      const selectedSet = activeFilters[cfg.field];
+
+      html += '<div class="filter-group">';
+      html += '<h3 class="filter-group-title">' + cfg.label + '</h3>';
+      html += '<div class="filter-options">';
+      sorted.forEach(function(value){
+        const count = rawValues.filter(function(v){ return v === value; }).length;
+        const checked = selectedSet && selectedSet.has(value) ? " checked" : "";
+        const displayValue = cfg.suffix ? value + cfg.suffix : value;
+        html += '<label class="filter-option">' +
+          '<input type="checkbox" data-field="' + cfg.field + '" value="' + value + '"' + checked + '>' +
+          '<span class="filter-option-label">' + displayValue + '</span>' +
+          '<span class="filter-option-count">' + count + '</span>' +
+          '</label>';
+      });
+      html += '</div></div>';
+    });
+
+    filterGroupsEl.innerHTML = html || '<p class="filters-empty">Todavía no hay datos suficientes para mostrar filtros acá. Completá brand, gender, stock (y los campos específicos del rubro) en tus productos.</p>';
+  }
+
+  // ===== Chips de filtros activos =====
+  function renderChips(){
+    const chips = [];
+    FILTER_CONFIG.forEach(function(cfg){
+      const set = activeFilters[cfg.field];
+      if(set && set.size > 0){
+        set.forEach(function(value){
+          chips.push({ field:cfg.field, value:value, display: cfg.suffix ? value + cfg.suffix : value });
+        });
+      }
+    });
+
+    if(chips.length === 0){
+      activeChipsEl.innerHTML = "";
+      activeChipsEl.classList.remove("show");
+      return;
+    }
+
+    activeChipsEl.classList.add("show");
+    let html = chips.map(function(c){
+      return '<button type="button" class="filter-chip" data-field="' + c.field + '" data-value="' + c.value + '">' +
+        c.display + ' <span aria-hidden="true">&times;</span></button>';
+    }).join("");
+    html += '<button type="button" class="clear-all-chip" id="clearAllChip">Limpiar todo</button>';
+    activeChipsEl.innerHTML = html;
+  }
+
+  function updateFilterCount(){
+    const total = Object.keys(activeFilters).reduce(function(sum, key){ return sum + activeFilters[key].size; }, 0);
+    activeFilterCountEl.textContent = total > 0 ? total : "";
+    activeFilterCountEl.classList.toggle("show", total > 0);
+  }
+
+  function clearAllFilters(){
+    activeFilters = {};
+    filtersSidebar.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
+    renderChips();
+    updateFilterCount();
+    renderGrid();
+  }
+
+  function resetEverything(){
+    searchInput.value = "";
+    searchTerm = "";
+    activeFilter = "todos";
+    filterButtons.forEach(function(b){ b.classList.toggle("active", b.dataset.filter === "todos"); });
+    activeFilters = {};
+    renderSidebar();
+    renderChips();
+    updateFilterCount();
+    renderGrid();
+  }
+
+  // ===== Tarjetas =====
+  function createCard(p){
+    const card = document.createElement("article");
+    card.className = "product-card";
+    card.dataset.id = p.id;
+    const metaLine = p.ref + (p.brand ? " · " + p.brand : "");
+    const stockHtml = p.stock ? '<span class="stock-badge"><span class="stock-dot ' + stockClass(p.stock) + '"></span>' + p.stock + '</span>' : "";
+    card.innerHTML =
+      '<div class="card-image-wrap">' +
+        '<span class="card-badge">' + categoryLabels[p.category] + '</span>' +
+        '<img src="' + p.image + '" alt="' + p.title + '" loading="lazy">' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<span class="card-meta">' + metaLine + '</span>' +
+        '<h3 class="card-title">' + p.title + '</h3>' +
+        '<div class="card-price-row">' +
+          '<span class="card-price">' + formatPrice(p.price) + '</span>' +
+          stockHtml +
+        '</div>' +
+        '<button type="button" class="btn-view">Ver Pieza →</button>' +
+      '</div>';
+    card.addEventListener("click", function(){ openModal(p.id); });
+    return card;
+  }
+
+  function observeCards(){
+    const cards = document.querySelectorAll(".product-card");
+    if(!("IntersectionObserver" in window)){
+      cards.forEach(function(c){ c.classList.add("visible"); });
+      return;
+    }
+    if(cardObserver) cardObserver.disconnect();
+    cardObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.12 });
+    cards.forEach(function(c){ cardObserver.observe(c); });
+  }
+
+  function renderGrid(){
+    const list = getFilteredProducts();
+    catalogGrid.innerHTML = "";
+    resultsCountEl.textContent = list.length + (list.length === 1 ? " pieza encontrada" : " piezas encontradas");
+
+    if(list.length === 0){
+      noResults.classList.add("show");
+    } else {
+      noResults.classList.remove("show");
+      const fragment = document.createDocumentFragment();
+      list.forEach(function(p){ fragment.appendChild(createCard(p)); });
+      catalogGrid.appendChild(fragment);
+    }
+    requestAnimationFrame(observeCards);
+  }
+
+  // ===== Pestañas de categoría =====
+  filterButtons.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      filterButtons.forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      activeFilter = btn.dataset.filter;
+      activeFilters = {};
+      renderSidebar();
+      renderChips();
+      updateFilterCount();
+      renderGrid();
+    });
+  });
+
+  // ===== Buscador =====
+  searchInput.addEventListener("input", function(e){
+    searchTerm = e.target.value;
+    renderGrid();
+  });
+
+  // ===== Checkboxes del sidebar (delegación de eventos) =====
+  filterGroupsEl.addEventListener("change", function(e){
+    const input = e.target;
+    if(input.matches('input[type="checkbox"]')){
+      const field = input.dataset.field;
+      const value = input.value;
+      if(!activeFilters[field]) activeFilters[field] = new Set();
+      if(input.checked) activeFilters[field].add(value);
+      else activeFilters[field].delete(value);
+      renderChips();
+      updateFilterCount();
+      renderGrid();
+    }
+  });
+
+  clearFiltersBtn.addEventListener("click", clearAllFilters);
+
+  // ===== Chips: quitar de a uno o limpiar todo =====
+  activeChipsEl.addEventListener("click", function(e){
+    if(e.target.closest("#clearAllChip")){
+      clearAllFilters();
+      return;
+    }
+    const chip = e.target.closest(".filter-chip");
+    if(chip){
+      const field = chip.dataset.field;
+      const value = chip.dataset.value;
+      if(activeFilters[field]){
+        activeFilters[field].delete(value);
+        const checkbox = filtersSidebar.querySelector('input[data-field="' + field + '"][value="' + CSS.escape(value) + '"]');
+        if(checkbox) checkbox.checked = false;
+        renderChips();
+        updateFilterCount();
+        renderGrid();
+      }
+    }
+  });
+
+  // ===== Botón "Limpiar filtros" del estado vacío =====
+  noResultsClearBtn.addEventListener("click", resetEverything);
+
+  // ===== Sidebar en mobile (drawer) =====
+  function updateBodyScrollLock(){
+    const locked = modalOverlay.classList.contains("active") || filtersSidebar.classList.contains("open");
+    document.body.style.overflow = locked ? "hidden" : "";
+  }
+  function openSidebar(){
+    filtersSidebar.classList.add("open");
+    sidebarBackdrop.classList.add("open");
+    updateBodyScrollLock();
+  }
+  function closeSidebar(){
+    filtersSidebar.classList.remove("open");
+    sidebarBackdrop.classList.remove("open");
+    updateBodyScrollLock();
+  }
+  toggleFiltersBtn.addEventListener("click", openSidebar);
+  sidebarClose.addEventListener("click", closeSidebar);
+  sidebarBackdrop.addEventListener("click", closeSidebar);
+
+  // ===== Modal =====
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalImg = document.getElementById("modalImg");
+  const modalCategory = document.getElementById("modalCategory");
+  const modalRef = document.getElementById("modalRef");
+  const modalBrand = document.getElementById("modalBrand");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalPrice = document.getElementById("modalPrice");
+  const modalStock = document.getElementById("modalStock");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalWhatsappBtn = document.getElementById("modalWhatsappBtn");
+  const modalClose = document.getElementById("modalClose");
+
+  function openModal(id){
+    const p = products.find(function(prod){ return prod.id === id; });
+    if(!p) return;
+    modalImg.src = p.image;
+    modalImg.alt = p.title;
+    modalCategory.textContent = categoryLabels[p.category];
+    modalRef.textContent = p.ref;
+    modalBrand.textContent = p.brand || "";
+    modalBrand.style.display = p.brand ? "block" : "none";
+    modalTitle.textContent = p.title;
+    modalPrice.textContent = formatPrice(p.price);
+    modalStock.innerHTML = p.stock ? '<span class="stock-dot ' + stockClass(p.stock) + '"></span>' + p.stock : "";
+    modalDesc.textContent = p.description;
+    const msg = "Hola! Quiero consultar sobre este producto:\n\n" + p.title + " (" + p.ref + ")\nPrecio: " + formatPrice(p.price) + "\n\n¿Podrían darme más información?";
+    modalWhatsappBtn.href = buildWhatsAppLink(msg);
+    modalOverlay.classList.add("active");
+    updateBodyScrollLock();
+  }
+
+  function closeModal(){
+    modalOverlay.classList.remove("active");
+    updateBodyScrollLock();
+  }
+
+  modalClose.addEventListener("click", closeModal);
+  modalOverlay.addEventListener("click", function(e){
+    if(e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){
+      if(modalOverlay.classList.contains("active")) closeModal();
+      if(filtersSidebar.classList.contains("open")) closeSidebar();
+    }
+  });
+
+  // ===== Footer WhatsApp =====
+  const footerWhatsapp = document.getElementById("footerWhatsapp");
+  footerWhatsapp.href = buildWhatsAppLink("Hola! Quiero más información sobre sus productos.");
+  footerWhatsapp.target = "_blank";
+  footerWhatsapp.rel = "noopener noreferrer";
+
+  // ===== Header con sombra al hacer scroll =====
+  window.addEventListener("scroll", function(){
+    if(window.scrollY > 20) siteHeader.classList.add("scrolled");
+    else siteHeader.classList.remove("scrolled");
+  });
+
+  // ===== Init =====
+  renderSidebar();
+  renderChips();
+  updateFilterCount();
+  renderGrid();
+})();
+</script>
+</body>
+</html>
